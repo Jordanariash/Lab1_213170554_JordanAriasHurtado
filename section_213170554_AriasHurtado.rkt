@@ -4,6 +4,7 @@
 ;dominio: point1 (station)  X point2 (station) X distance (positive-number) X cost (positive-number U {0})
 ;recorrido: section
 
+(provide (all-defined-out))
 (require "station_213170554_AriasHurtado.rkt")
 
 (define (section point1 point2 distance cost)
