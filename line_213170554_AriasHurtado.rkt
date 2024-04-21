@@ -1,7 +1,7 @@
 #lang racket
 
 ;Definicion: Función que permite crear una linea mediante la union de secciones
-;Dominio id (int) X name (string) X rail-type (string) X section* (* señala que se pueden agregar 0 o más tramos)
+;Dominio: id (int) X name (string) X rail-type (string) X section* (* señala que se pueden agregar 0 o más tramos)
 ;Recorrido: line
 
 (provide (all-defined-out))
@@ -10,10 +10,10 @@
 
 
 (define (line id-line name-line rail-type . section)
-  (if (and (integer? id-line)
+  (if (and (integer? id-line) ;reemplazar por las funciones de abajo que ya lo verifican
            (string? name-line)
            (string? rail-type)
-           (compare-two-section )
+           
            )
   (list id-line name-line rail-type section)
   null
@@ -45,7 +45,7 @@
   )
 
 
-
+;getters
 (define (get-station stations)
   (car stations))
 
@@ -80,6 +80,12 @@
 (define (get-stations-without-first stations)
   (cdr stations))
 
+(define (get-first-possible-candidates possible-candidates-routes)
+  (car possible-candidates-routes))
+
+(define (get-other-possible-candidates possible-candidates-routes)
+  (cdr possible-candidates-routes))
+
 
 
 
@@ -99,13 +105,6 @@
       (get-first-route routes)
   )
 )
-
-
-(define (get-first-possible-candidates possible-candidates-routes)
-  (car possible-candidates-routes))
-
-(define (get-other-possible-candidates possible-candidates-routes)
-  (cdr possible-candidates-routes))
 
 (define (go-through-stations stations possible-candidates-routes station-start station-end visited-stations)
   (if (null? possible-candidates-routes)
@@ -129,6 +128,8 @@
            )
        ) 
   )
+
+
 
 (define (stations? stations)
   (list? stations))
@@ -163,3 +164,36 @@
                                (raise "no es posible llegar a la estacion")   
          )
  )
+
+
+
+
+;Dominio: line (line)
+;Recorrido: positive number
+ 
+(define (line-lenght line)
+  (get-distance-total (get-sections line)))
+
+(define (get-sections line)
+  (cadddr line))
+
+
+(define (get-distance-line sections)
+  (map caddr sections)
+)
+
+(define (get-distance-total sections)
+  (apply + (get-distance-line sections))
+  )
+  
+
+
+
+
+
+
+
+
+
+
+
