@@ -168,6 +168,10 @@
 
 
 
+
+
+
+
 ;Dominio: line (line)
 ;Recorrido: positive number
  
@@ -187,13 +191,30 @@
   )
   
 
+;Dominio: line (line)
+;Recorrido: positive number
+;Recursion: natural
+
+(define (line-cost line)
+  (get-cost-total (get-sections line))
+  )
+
+(define (get-cost-line sections)
+  (map cadddr sections)
+)
+
+(define (get-first-cost sections)
+  (car sections))
+(define (get-rest-cost sections)
+  (cdr sections))
 
 
 
-
-
-
-
-
-
-
+(define (get-cost-total sections)
+  (if (null? (get-cost-line sections))
+      0
+      (+ (get-first-cost (get-cost-line sections))
+         (get-cost-total (get-rest-cost sections))
+      )
+  )
+)
